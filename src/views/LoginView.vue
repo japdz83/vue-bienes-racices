@@ -1,11 +1,11 @@
 <script setup>
   import { useForm, useField } from 'vee-validate'
   import { loginSchema as validationSchema } from '../validation/loginShema'
-  import { userAuthStore } from '../stores/auth';
+  import { useAuthStore } from '../stores/auth';
 
 
   const { handleSubmit } = useForm({ validationSchema })
-  const auth = userAuthStore()
+  const auth = useAuthStore()
 
   // console.log(auth)
 
@@ -39,15 +39,15 @@
     Iniciar Sesión con tu cuenta
   </v-subtitle>
 
-  <v-alert
+   <v-alert
       v-if="auth.hasError"
       class="my-5"
       type="error"
       :title="auth.errorMsg"
   >
-    
   </v-alert>
 
+ 
   <v-form class="mt-5">
     <v-text-field
       type="email"

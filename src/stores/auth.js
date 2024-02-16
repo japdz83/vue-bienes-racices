@@ -3,13 +3,16 @@ import { defineStore } from 'pinia'
 import { useFirebaseAuth } from 'vuefire'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
-export const userAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore('auth', () => {
     const auth = useFirebaseAuth()
+
+    console.log(auth)
 
     const errorMsg = ref('')
     const errorCodes = {
-        'auth/user-not-found': 'Usuario no encontrado',
-        'auth/wrong-password': 'El password es incorrecto'
+        'auth/invalid-credential': 'El Usuario y la Contraseña son incorrectas',
+        // 'auth/invalid-credential': 'Contraseña incorrecta',
+
     }
 
     const login = ({ email, password }) => {
@@ -18,7 +21,8 @@ export const userAuthStore = defineStore('auth', () => {
                 console.log(userCredential)
             })
             .catch(error => {
-                console.log(error)
+                console.log(error.code)
+                console.log(error.message)
                 errorMsg.value = errorCodes[error.code]
 
             })
